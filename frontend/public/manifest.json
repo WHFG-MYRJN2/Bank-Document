@@ -1,0 +1,17 @@
+{
+    "short_name": "Arsip Truk",
+    "name": "Arsip Digital Pemuatan Truk",
+    "description": "PWA arsip dokumen pemuatan truk gudang",
+    "icons": [
+        {
+            "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgZmlsbD0iIzA5MDkwYiIgcng9IjI0Ii8+PHRleHQgeD0iOTYiIHk9IjExNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4MCIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZpbGw9IiNlYWIzMDgiIGZvbnQtd2VpZ2h0PSI5MDAiPkFUPC90ZXh0Pjwvc3ZnPg==",
+            "type": "image/svg+xml",
+            "sizes": "192x192 512x512"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#09090b",
+    "background_color": "#09090b"
+}

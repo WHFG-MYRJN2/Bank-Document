@@ -1,56 +1,109 @@
-import { useEffect } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import { HOME } from "@/constants/testIds";
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          data-testid={HOME.emergentLink}
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "sonner";
+import { AuthProvider } from "@/contexts/AuthContext";
+import RequireAuth from "@/components/RequireAuth";
+import BottomNav from "@/components/BottomNav";
+import Login from "@/pages/Login";
+import Dashboard from "@/pages/Dashboard";
+import Queue from "@/pages/Queue";
+import TruckInput from "@/pages/TruckInput";
+import SessionMode from "@/pages/SessionMode";
+import History from "@/pages/History";
+import TruckDetail from "@/pages/TruckDetail";
+import Retention from "@/pages/Retention";
+import Account from "@/pages/Account";
 
 function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+    return (
+        <div className="App min-h-screen bg-zinc-950 text-white">
+            <BrowserRouter>
+                <AuthProvider>
+                    <Routes>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                        <Route
+                            path="/dashboard"
+                            element={
+                                <RequireAuth>
+                                    <Dashboard />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="/queue"
+                            element={
+                                <RequireAuth>
+                                    <Queue />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="/new"
+                            element={
+                                <RequireAuth>
+                                    <TruckInput />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="/session/:truckId"
+                            element={
+                                <RequireAuth>
+                                    <SessionMode />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="/history"
+                            element={
+                                <RequireAuth>
+                                    <History />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="/trucks/:truckId"
+                            element={
+                                <RequireAuth>
+                                    <TruckDetail />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="/retention"
+                            element={
+                                <RequireAuth>
+                                    <Retention />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="/account"
+                            element={
+                                <RequireAuth>
+                                    <Account />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                    </Routes>
+                    <BottomNav />
+                    <Toaster
+                        position="top-center"
+                        theme="dark"
+                        toastOptions={{
+                            style: {
+                                background: "#18181b",
+                                border: "1px solid #3f3f46",
+                                color: "#fafafa",
+                            },
+                        }}
+                    />
+                </AuthProvider>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;
